@@ -1,131 +1,23 @@
+const handleMotion = (event) => {
+  document.getElementById("Accelerometer_gx").innerHTML = event.accelerationIncludingGravity.x.toFixed(2);
+  document.getElementById("Accelerometer_gy").innerHTML = event.accelerationIncludingGravity.y.toFixed(2);
+  document.getElementById("Accelerometer_gz").innerHTML = event.accelerationIncludingGravity.z.toFixed(2);
 
-<!doctype html>
-<html lang="en"> 
- <head>
-  <title>Demo - The Web's Sixth Sense: A Study of Scripts Accessing Smartphone Sensors</title> 
-  <title>JavaScript Sensor Access Demo</title> 
- </head> 
- <body>
-    <div class="p-3 mb-2 bg-secondary" id="demo-div"> <a id="start_demo" class="btn btn-lg btn-success py-1" href="https://sensor--js-xyz.translate.goog/demo.html?_x_tr_sl=en&amp;_x_tr_tl=id&amp;_x_tr_hl=id&amp;_x_tr_pto=tc#" role="button">Start the demo</a> 
-    <p style="margin-top:1rem;">Num. of datapoints: <span class="badge badge-warning" id="num-observed-events">0</span></p> 
-    <h4 style="margin-top:0.75rem;">Orientation</h4> 
-    <ul> 
-     <li>X-axis (β): <span id="Orientation_b">0</span><span>°</span></li> 
-     <li>Y-axis (γ): <span id="Orientation_g">0</span><span>°</span></li> 
-     <li>Z-axis (α): <span id="Orientation_a">0</span><span>°</span></li> 
-    </ul> 
-    <h4>Accelerometer</h4> 
-    <ul> 
-     <li>X-axis: <span id="Accelerometer_x">0</span><span> m/s<sup>2</sup></span></li> 
-     <li>Y-axis: <span id="Accelerometer_y">0</span><span> m/s<sup>2</sup></span></li> 
-     <li>Z-axis: <span id="Accelerometer_z">0</span><span> m/s<sup>2</sup></span></li> 
-     <li>Data Interval: <span id="Accelerometer_i">0</span><span> ms</span></li> 
-    </ul> 
-    <h4>Accelerometer including gravity</h4> 
-    <ul> 
-     <li>X-axis: <span id="Accelerometer_gx">0</span><span> m/s<sup>2</sup></span></li> 
-     <li>Y-axis: <span id="Accelerometer_gy">0</span><span> m/s<sup>2</sup></span></li> 
-     <li>Z-axis: <span id="Accelerometer_gz">0</span><span> m/s<sup>2</sup></span></li> 
-    </ul> 
-    <h4>Gyroscope</h4> 
-    <ul> 
-     <li>X-axis: <span id="Gyroscope_x">0</span><span>°/s</span></li> 
-     <li>Y-axis: <span id="Gyroscope_y">0</span><span>°/s</span></li> 
-     <li>Z-axis: <span id="Gyroscope_z">0</span><span>°/s</span></li> 
-    </ul> 
-   </div> 
-  </main> 
-  <footer class="footer"> 
-   
-  </footer> 
-  <script>
+  document.getElementById("Accelerometer_x").innerHTML = event.acceleration.x.toFixed(2);
+  document.getElementById("Accelerometer_y").innerHTML = event.acceleration.y.toFixed(2);
+  document.getElementById("Accelerometer_z").innerHTML = event.acceleration.z.toFixed(2);
 
-function handleOrientation(event) {
-  updateFieldIfNotNull('Orientation_a', event.alpha);
-  updateFieldIfNotNull('Orientation_b', event.beta);
-  updateFieldIfNotNull('Orientation_g', event.gamma);
-  incrementEventCount();
-}
-
-function incrementEventCount(){
-  let counterElement = document.getElementById("num-observed-events")
-  let eventCount = parseInt(counterElement.innerHTML)
-  counterElement.innerHTML = eventCount + 1;
-}
-
-function updateFieldIfNotNull(fieldName, value, precision=10){
-  if (value != null)
-    document.getElementById(fieldName).innerHTML = value.toFixed(precision);
-}
-
-function handleMotion(event) {
-  updateFieldIfNotNull('Accelerometer_gx', event.accelerationIncludingGravity.x);
-  updateFieldIfNotNull('Accelerometer_gy', event.accelerationIncludingGravity.y);
-  updateFieldIfNotNull('Accelerometer_gz', event.accelerationIncludingGravity.z);
-
-  updateFieldIfNotNull('Accelerometer_x', event.acceleration.x);
-  updateFieldIfNotNull('Accelerometer_y', event.acceleration.y);
-  updateFieldIfNotNull('Accelerometer_z', event.acceleration.z);
-
-  updateFieldIfNotNull('Accelerometer_i', event.interval, 2);
-
-  updateFieldIfNotNull('Gyroscope_z', event.rotationRate.alpha);
-  updateFieldIfNotNull('Gyroscope_x', event.rotationRate.beta);
-  updateFieldIfNotNull('Gyroscope_y', event.rotationRate.gamma);
-  incrementEventCount();
-}
-
-let is_running = false;
-let demo_button = document.getElementById("start_demo");
-demo_button.onclick = function(e) {
-  e.preventDefault();
-  
-  // Request permission for iOS 13+ devices
-  if (
-    DeviceMotionEvent &&
-    typeof DeviceMotionEvent.requestPermission === "function"
-  ) {
-    DeviceMotionEvent.requestPermission();
-  }
-  
-  if (is_running){
-    window.removeEventListener("devicemotion", handleMotion);
-    window.removeEventListener("deviceorientation", handleOrientation);
-    demo_button.innerHTML = "Start demo";
-    demo_button.classList.add('btn-success');
-    demo_button.classList.remove('btn-danger');
-    is_running = false;
-  }else{
-    window.addEventListener("devicemotion", handleMotion);
-    window.addEventListener("deviceorientation", handleOrientation);
-    document.getElementById("start_demo").innerHTML = "Stop demo";
-    demo_button.classList.remove('btn-success');
-    demo_button.classList.add('btn-danger');
-    is_running = true;
-  }
+  document.getElementById("Gyroscope_z").innerHTML = event.rotationRate.alpha.toFixed(2);
+  document.getElementById("Gyroscope_x").innerHTML = event.rotationRate.beta.toFixed(2);
+  document.getElementById("Gyroscope_y").innerHTML = event.rotationRate.gamma.toFixed(2);
 };
 
-/*
-Light and proximity are not supported anymore by mainstream browsers.
-window.addEventListener('devicelight', function(e) {
-   document.getElementById("DeviceLight").innerHTML="AmbientLight current Value: "+e.value+" Max: "+e.max+" Min: "+e.min;
-});
+document.addEventListener("devicemotion", handleMotion);
 
-window.addEventListener('lightlevel', function(e) {
-   document.getElementById("Lightlevel").innerHTML="Light level: "+e.value;
-});
+const handleOrientation = (event) => {
+  document.getElementById("Orientation_a").innerHTML = event.alpha.toFixed(2);
+  document.getElementById("Orientation_b").innerHTML = event.beta.toFixed(2);
+  document.getElementById("Orientation_g").innerHTML = event.gamma.toFixed(2);
+};
 
-window.addEventListener('deviceproximity', function(e) {
-   document.getElementById("DeviceProximity").innerHTML="DeviceProximity current Value: "+e.value+" Max: "+e.max+" Min: "+e.min;
-});
-
-window.addEventListener('userproximity', function(event) {
-   document.getElementById("UserProximity").innerHTML="UserProximity: "+event.near;
-});
-*/
-
-</script>  
-  <script>function gtElInit() {var lib = new google.translate.TranslateService();lib.translatePage('en', 'id', function () {});}</script>
-  <script src="https://translate.google.com/translate_a/element.js?cb=gtElInit&amp;hl=id&amp;client=wt_srp" type="text/javascript"></script>
- </body>
-</html>
+document.addEventListener("deviceorientation", handleOrientation);
