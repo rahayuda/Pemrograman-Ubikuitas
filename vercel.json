@@ -1,8 +1,0 @@
-// vercel.json
-{
-  "functions": {
-    "api/sensor.js": {
-      "runtime": "nodejs16"
-    }
-  }
-}
